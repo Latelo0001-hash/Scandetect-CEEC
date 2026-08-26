@@ -11,7 +11,11 @@ page_start('Accueil', false);
     </header>
 
     <div class="home-hero">
-        <div class="home-hero-media" aria-hidden="true"></div>
+        <div class="home-hero-media" aria-hidden="true">
+            <video class="home-hero-video" autoplay muted loop playsinline preload="metadata">
+                <source src="<?= e(app_route('video-hero.mp4?v=20260826')) ?>" type="video/mp4">
+            </video>
+        </div>
         <div class="home-hero-overlay"></div>
         <div class="container home-hero-content">
             <div class="home-copy">
