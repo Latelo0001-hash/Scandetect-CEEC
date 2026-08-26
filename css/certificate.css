@@ -1,0 +1,100 @@
+.certificate-result-section{padding-top:38px;padding-bottom:70px}
+.certificate-result-copy{max-width:1100px;margin:0 auto 22px}
+.certificate-result-copy>p{font-size:15px;line-height:1.65;margin:0 0 12px}
+.certificate-tech-note{padding:13px 16px;border-left:4px solid var(--sd-cyan);background:#f4f9fd;color:var(--muted);font-size:12px;line-height:1.55}
+.certificate-scroll{overflow-x:auto;padding:12px 0 28px}
+.readonly-print-warning{display:none}
+
+/* Nouveau modèle officiel : 1037.48 x 595.276 pt = 366 x 210 mm. */
+.certificate-stage{position:relative;width:366mm;height:210mm;margin:0 auto;background:transparent;box-shadow:0 18px 45px rgba(20,31,69,.18);overflow:hidden}
+.certificate-template{position:absolute;inset:0;width:366mm;height:210mm;display:block;object-fit:fill;user-select:none;pointer-events:none}
+.certificate-template-pdf1{display:none}
+.certificate-overlay{position:absolute;inset:0;width:366mm;height:210mm}
+
+/* Écran : PDF 2 + données. Consultation QR : PDF 1 + données.
+   Impression : PDF 4, uniquement les données et QR sur page blanche. */
+.verification-exporting .certificate-template-pdf2{display:none}
+.verification-exporting .certificate-template-pdf1{display:block}
+.verification-exporting .certificate-number-mask,
+.verification-exporting .certificate-number-copy,
+.verification-exporting .qr-slot,
+.verification-exporting .certificate-label-correction{display:none}
+.pdf4-exporting .certificate-template,
+.pdf4-exporting .certificate-number-mask,
+.pdf4-exporting .certificate-number-copy,
+.pdf4-exporting .certificate-label-correction{display:none}
+.pdf4-exporting .certificate-stage{background:#fff;box-shadow:none}
+.certificate-stage-consultation .certificate-number-mask,
+.certificate-stage-consultation .certificate-number-copy,
+.certificate-stage-consultation .qr-slot,
+.certificate-stage-consultation .certificate-label-correction{display:none}
+
+/* Colonne DESCRIPTION du tableau du nouveau modèle. */
+.certificate-value{position:absolute;left:184.32mm;width:73.0mm;height:4.70mm;overflow:hidden;white-space:nowrap;color:#000;font-family:"Arial Narrow",Arial,Helvetica,sans-serif;font-size:6.15pt;font-weight:700;line-height:4.70mm;text-align:left}
+
+/* Masquage des numéros d'exemple imprimés dans le modèle PDF, puis remplacement. */
+.certificate-number-mask{position:absolute;z-index:1;pointer-events:none}
+.certificate-number-mask-left{left:76.6mm;top:72.8mm;width:20.5mm;height:86.4mm;background:#fff}
+.certificate-number-mask-stub,.certificate-number-mask-right{display:none}
+.certificate-number-copy{position:absolute;z-index:2;white-space:nowrap;text-align:center;overflow:hidden;font-family:"Arial Black","Arial Narrow",Arial,Helvetica,sans-serif;font-weight:900}
+.certificate-number-left{left:44.5mm;top:107.2mm;width:84mm;height:18mm;line-height:18mm;transform:rotate(-90deg);transform-origin:center center;color:#2F3695;letter-spacing:-.34mm}
+.certificate-number-stub{left:21.7mm;top:147.45mm;width:33.5mm;height:14.5mm;line-height:14.5mm;color:#fff;letter-spacing:-.18mm}
+.certificate-number-right{left:309.6mm;top:147.45mm;width:33.5mm;height:14.5mm;line-height:14.5mm;color:#fff;letter-spacing:-.18mm}
+
+/* Trois QR du nouveau modèle. */
+.qr-slot{position:absolute;z-index:3;width:16.5mm;height:16.5mm;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.qr-stub{left:30.25mm;top:163.2mm;background:transparent}
+.qr-left{left:79.05mm;top:162.15mm;background:#fff}
+.qr-right{left:317.9mm;top:163.2mm;background:transparent}
+.pdf4-exporting .qr-stub,.pdf4-exporting .qr-right{background:#2f3776}
+.qr-generated-image{display:block;width:100%;height:100%;object-fit:contain}
+.qr-error{border:.25mm solid #c00;color:#c00;font-size:7pt}
+
+.result-actions{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:5px;padding:24px 0;border-top:1px solid var(--line)}
+.result-actions h2{margin:0 0 5px;font-size:24px}.result-actions p{margin:0}
+.result-buttons{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:10px}
+.result-buttons .btn-secondary-app,.result-buttons .btn-primary-app{margin:0;width:auto}
+
+.paper-verification-modal[hidden]{display:none}
+.paper-verification-modal{position:fixed;inset:0;z-index:2500;display:flex;align-items:center;justify-content:center;padding:24px}
+.paper-verification-backdrop{position:absolute;inset:0;background:rgba(13,23,55,.72);backdrop-filter:blur(4px)}
+.paper-verification-card{position:relative;width:min(100%,590px);max-height:calc(100vh - 48px);overflow-y:auto;padding:38px 40px 34px;border-top:6px solid #f4d40b;border-radius:16px;background:#fff;box-shadow:0 28px 80px rgba(5,16,51,.35)}
+.paper-verification-close{position:absolute;right:18px;top:14px;width:42px;height:42px;border:0;border-radius:50%;background:#eef2fb;color:#263686;font-size:29px;line-height:1;cursor:pointer}
+.paper-verification-icon{display:flex;align-items:center;justify-content:center;width:62px;height:62px;margin-bottom:20px;border-radius:50%;background:#eaf6ef;color:#168447;font-size:30px;font-weight:900}
+.paper-verification-card .eyebrow{margin:0 0 7px;color:#2f3695}
+.paper-verification-card h2{margin:0 48px 10px 0;color:#111a38;font-size:30px}
+.paper-verification-help{margin:0 0 22px;color:#5e6880;font-size:17px;line-height:1.55}
+.paper-expected-number{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px;padding:16px 18px;border:2px solid #dce3f2;border-radius:10px;background:#f7f9fd}
+.paper-expected-number span{color:#68738a;font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.paper-expected-number strong{color:#2f3695;font-size:27px;letter-spacing:.06em}
+.paper-verification-card label[for="paper-number-input"]{display:block;margin-bottom:8px;color:#202a49;font-size:17px;font-weight:800}
+.paper-number-input{height:55px!important;font-size:21px!important;font-weight:700;letter-spacing:.05em}
+.paper-verification-error{margin-top:10px;padding:11px 13px;border-radius:8px;background:#fff0f0;color:#bc2929;font-size:15px;font-weight:700}
+.paper-print-confirmation{display:flex;align-items:flex-start;gap:11px;margin:20px 0;color:#3b4661;font-size:15px;line-height:1.45;cursor:pointer}
+.paper-print-confirmation input{flex:0 0 auto;width:21px;height:21px;margin-top:1px;accent-color:#2f3695}
+.paper-verification-actions{display:flex;justify-content:flex-end;gap:11px;margin-top:24px}
+.paper-verification-actions .btn-secondary-app,.paper-verification-actions .btn-primary-app{width:auto;margin:0}
+body.paper-verification-open{overflow:hidden}
+
+@media(max-width:600px){.paper-verification-card{padding:32px 22px 24px}.paper-verification-card h2{font-size:25px}.paper-verification-actions{align-items:stretch;flex-direction:column-reverse}.paper-verification-actions .btn-secondary-app,.paper-verification-actions .btn-primary-app{width:100%}}
+
+@media(max-width:900px){.certificate-result-section{width:100%;max-width:none}.certificate-scroll{padding-left:20px;padding-right:20px}.certificate-stage{margin-left:0}.result-actions{align-items:flex-start;flex-direction:column}.result-buttons{justify-content:flex-start}}
+
+@media print{
+  @page{size:366mm 210mm;margin:0}
+  .app-header,.app-footer,.page-hero,.certificate-result-copy,.result-actions{display:none!important}
+  body,main,.certificate-result-section,.certificate-scroll{margin:0!important;padding:0!important;background:transparent!important;width:auto!important;max-width:none!important;overflow:visible!important}
+  .certificate-stage{width:366mm!important;height:210mm!important;margin:0!important;box-shadow:none!important}
+  .certificate-template{display:block!important;width:366mm!important;height:210mm!important}
+  .certificate-overlay{width:366mm!important;height:210mm!important}
+  .certificate-number-mask{display:block!important}
+  .certificate-value{color:#000!important}
+  .readonly-certificate-view .certificate-scroll{display:none!important}
+  .readonly-certificate-view .readonly-print-warning{display:block!important;width:180mm;margin:35mm auto!important;padding:18mm!important;border:1mm solid #b42318;text-align:center;background:#fff!important;color:#7a271a!important}
+  .readonly-certificate-view .readonly-print-warning h1{margin:0 0 8mm;font-size:24pt}
+  .readonly-certificate-view .readonly-print-warning p{margin:0;font-size:14pt;line-height:1.5}
+}
+
+/* Le nouveau PDF source contient encore "EEC Representative" à la ligne 29.
+   Cette micro-correction conserve la modification déjà validée : "CEEC Representative". */
+.certificate-label-correction{position:absolute;z-index:2;left:147.7mm;top:195.55mm;width:18.4mm;height:3.35mm;line-height:3.35mm;overflow:hidden;white-space:nowrap;background:#fff;color:#444;font-family:"Arial Narrow",Arial,Helvetica,sans-serif;font-size:5pt;font-weight:400;text-align:left}

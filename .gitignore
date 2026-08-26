@@ -1,0 +1,18 @@
+.DS_Store
+.idea/
+.vscode/
+
+# Identifiants locaux
+includes/mail-secrets.local.php
+.env
+.env.*
+!.env.example
+
+# Données générées et privées
+storage/certificates/*
+!storage/certificates/.gitkeep
+storage/generated/*
+storage/verification/*
+!storage/verification/.gitkeep
+storage/reset-backups/
+storage/certificate-numbers.txt

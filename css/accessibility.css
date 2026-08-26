@@ -1,0 +1,52 @@
+/* Lisibilité renforcée pour les utilisateurs âgés.
+   Cette feuille concerne l'interface, pas les valeurs du certificat imprimé. */
+body{font-size:17px;line-height:1.55}
+p,.muted{line-height:1.6}
+.user-nav{font-size:15px}
+.user-nav a{padding:9px 4px}
+.brand-copy strong{font-size:15px}.brand-copy small{font-size:11px}
+.eyebrow{font-size:13px;line-height:1.45}
+.page-hero p{font-size:17px;line-height:1.55}
+.page-hero .back-link{font-size:14px}
+.home-intro{font-size:18px;line-height:1.75}
+.login-card>p.muted{font-size:17px}
+.login-card label,label{font-size:15px}
+.form-control,.login-card .form-control{font-size:17px;min-height:56px}
+.field-wrap label small{font-size:13px;line-height:1.45}
+.section-heading p,.review-note span,.actions-row .muted{font-size:15px;line-height:1.55}
+.certificate-list-help{font-size:14px}
+.status-legend,.selected-certificate-status{font-size:14px}
+.app-table th{font-size:12px;line-height:1.4}
+.app-table td{font-size:16px;line-height:1.5}
+.app-table th,.app-table td{padding-top:19px;padding-bottom:19px}
+.dashboard-status{min-width:105px;padding:8px 12px;font-size:13px}
+.dashboard-certificates-table a.truck-location-link{font-size:16px!important}
+.app-table a{font-size:16px}
+.btn-primary-app{min-height:48px;font-size:14px;line-height:1.35}
+.btn-secondary-app{min-height:45px;font-size:13px;line-height:1.35}
+.password-toggle{font-size:14px}
+.location-modal-current,.location-modal-footer{font-size:14px}
+.completed-certificate-note span{font-size:15px}
+.certificate-tech-note{font-size:14px!important}
+.result-actions p{font-size:15px}
+.app-footer{font-size:13px}
+
+/* Tableau de bord plus large et plus aéré sur les écrans adaptés. */
+.container.dashboard-container{width:calc(100% - 48px);max-width:1560px}
+.dashboard-container .card-panel,.dashboard-container .table-responsive,.dashboard-certificates-table{width:100%}
+.dashboard-certificates-table{min-width:1260px}
+.dashboard-certificates-table th,.dashboard-certificates-table td{padding-left:22px;padding-right:22px}
+.dashboard-certificates-table th:nth-child(1){min-width:145px}
+.dashboard-certificates-table th:nth-child(2){min-width:190px}
+.dashboard-certificates-table th:nth-child(3){min-width:170px}
+.dashboard-certificates-table th:nth-child(4){min-width:140px}
+.dashboard-certificates-table th:nth-child(5){min-width:135px}
+.dashboard-certificates-table th:nth-child(6){min-width:235px}
+.dashboard-certificates-table th:nth-child(7){min-width:125px}
+
+@media(max-width:760px){
+  body{font-size:16px}
+  .home-intro,.page-hero p{font-size:16px}
+  .app-table th{font-size:11px}.app-table td,.app-table a{font-size:15px}
+  .container.dashboard-container{width:calc(100% - 28px);max-width:1560px}
+}
