@@ -47,7 +47,7 @@
 .qr-left{left:79.05mm;top:162.15mm;background:#fff}
 .qr-right{left:317.9mm;top:163.2mm;background:transparent}
 .pdf4-exporting .qr-stub,.pdf4-exporting .qr-right{background:#2f3776}
-.qr-generated-image{display:block;width:100%;height:100%;object-fit:contain}
+.qr-generated-image{display:block;width:100%;height:100%;object-fit:contain;-webkit-print-color-adjust:exact;print-color-adjust:exact}
 .qr-error{border:.25mm solid #c00;color:#c00;font-size:7pt}
 
 .result-actions{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:5px;padding:24px 0;border-top:1px solid var(--line)}
@@ -89,6 +89,13 @@ body.paper-verification-open{overflow:hidden}
   .certificate-overlay{width:366mm!important;height:210mm!important}
   .certificate-number-mask{display:block!important}
   .certificate-value{color:#000!important}
+  .secure-certificate-printing .certificate-template,
+  .secure-certificate-printing .certificate-number-mask,
+  .secure-certificate-printing .certificate-number-copy,
+  .secure-certificate-printing .certificate-label-correction{display:none!important}
+  .secure-certificate-printing .certificate-stage{background:#fff!important}
+  .secure-certificate-printing .qr-stub,
+  .secure-certificate-printing .qr-right{background:#2f3776!important}
   .readonly-certificate-view .certificate-scroll{display:none!important}
   .readonly-certificate-view .readonly-print-warning{display:block!important;width:180mm;margin:35mm auto!important;padding:18mm!important;border:1mm solid #b42318;text-align:center;background:#fff!important;color:#7a271a!important}
   .readonly-certificate-view .readonly-print-warning h1{margin:0 0 8mm;font-size:24pt}

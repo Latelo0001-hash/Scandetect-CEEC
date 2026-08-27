@@ -129,42 +129,45 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function submitSecurePrint(paperNumber) {
     printButton.disabled = true;
-    if (status) status.textContent = 'Ouverture sécurisée du PDF 4…';
+    if (status) status.textContent = 'Verrouillage de l’impression unique…';
 
-    // Cette ouverture intervient directement pendant le clic sur le bouton de
-    // la modale : elle n'est donc pas bloquée comme les anciennes popups.
-    var printWindow = window.open('about:blank', 'scandetect-certificate-print');
-    if (!printWindow) {
+    var markData = new FormData();
+    markData.append('csrf', downloadButton.dataset.csrf || '');
+    markData.append('id', downloadButton.dataset.recordId || '');
+    markData.append('paper_number', paperNumber);
+
+    var markUrl = downloadButton.getAttribute('data-mark-printed-url') || 'mark-printed.php';
+    fetch(markUrl, {
+      method: 'POST',
+      body: markData,
+      credentials: 'same-origin'
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (payload) {
+        if (!response.ok || !payload.ok) {
+          throw new Error(payload.message || 'Impossible de confirmer l’impression unique.');
+        }
+        return payload;
+      });
+    }).then(function () {
+      closePaperModal();
+      document.body.classList.add('pdf4-exporting', 'secure-certificate-printing');
+      if (status) status.textContent = 'Certificat verrouillé. Ouverture de l’impression…';
+
+      window.addEventListener('afterprint', function () {
+        document.body.classList.remove('pdf4-exporting', 'secure-certificate-printing');
+        if (status) status.textContent = 'Impression terminée. Retour au tableau de bord…';
+        window.setTimeout(function () {
+          window.location.href = downloadButton.getAttribute('data-dashboard-url') || 'dashboard.php';
+        }, 3000);
+      }, { once: true });
+
+      window.print();
+    }).catch(function (error) {
       printButton.disabled = false;
-      showPaperError('Autorisez les fenêtres surgissantes pour ouvrir le PDF d’impression.');
-      return;
-    }
-
-    var printForm = document.createElement('form');
-    printForm.method = 'POST';
-    printForm.action = downloadButton.getAttribute('data-print-once-url') || 'print-certificate-once.php';
-    printForm.target = 'scandetect-certificate-print';
-
-    [
-      ['csrf', downloadButton.dataset.csrf || ''],
-      ['id', downloadButton.dataset.recordId || ''],
-      ['paper_number', paperNumber]
-    ].forEach(function (entry) {
-      var input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = entry[0];
-      input.value = entry[1];
-      printForm.appendChild(input);
+      var detail = error && error.message ? error.message : 'Erreur inconnue.';
+      showPaperError(detail);
+      if (status) status.textContent = 'L’impression n’a pas pu être lancée.';
     });
-
-    document.body.appendChild(printForm);
-    printForm.submit();
-    printForm.remove();
-    closePaperModal();
-    if (status) status.textContent = 'PDF 4 ouvert. Retour au tableau de bord…';
-    window.setTimeout(function () {
-      window.location.href = downloadButton.getAttribute('data-dashboard-url') || 'dashboard.php';
-    }, 1500);
   }
 
   function prepare() {
@@ -179,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     Promise.all([waitForQr(), waitForImages()])
       .then(function () {
-        if (status) status.textContent = 'Création de la version de consultation PDF 1…';
+        if (status) status.textContent = 'Création de la version de consultation PDF …';
         return renderPdfBlob('verification');
       })
       .then(function (blob) {
@@ -204,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function () {
         printButton.disabled = false;
         printButton.textContent = 'Vérifier le papier et imprimer →';
         var expectedNumber = downloadButton.dataset.certificateNumber || '';
-        if (status) status.textContent = 'PDF 4 prêt. Vérification du papier officiel ' + expectedNumber + '…';
+        if (status) status.textContent = 'PDF prêt. Vérification du papier officiel ' + expectedNumber + '…';
         if (downloadButton.dataset.autoDownload === '1' && printObjectUrl) {
           window.setTimeout(function () {
             var autoLink = document.createElement('a');
@@ -291,4 +294,5 @@ document.addEventListener('DOMContentLoaded', function () {
     if (printObjectUrl) URL.revokeObjectURL(printObjectUrl);
   });
 
+  prepare();
 });

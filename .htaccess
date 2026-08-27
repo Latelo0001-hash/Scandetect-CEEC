@@ -1,5 +1,59 @@
 Options -Indexes
 
+DirectoryIndex index.php
+
+RewriteEngine On
+
+# Rediriger les anciennes pages PHP demandées directement vers leur URL publique.
+# THE_REQUEST évite toute boucle avec les réécritures internes ci-dessous.
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?index\.php(?:[?\s]) [NC]
+RewriteRule ^index\.php$ ./ [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?login\.php(?:[?\s]) [NC]
+RewriteRule ^login\.php$ login [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?logout\.php(?:[?\s]) [NC]
+RewriteRule ^logout\.php$ logout [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?dashboard\.php(?:[?\s]) [NC]
+RewriteRule ^dashboard\.php$ dashboard [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?certificat\.php(?:[?\s]) [NC]
+RewriteRule ^certificat\.php$ certificate [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?confirmation\.php(?:[?\s]) [NC]
+RewriteRule ^confirmation\.php$ certificate/confirmation [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?generate-pdf\.php(?:[?\s]) [NC]
+RewriteRule ^generate-pdf\.php$ certificate/generate [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?view-certificate\.php(?:[?\s]) [NC]
+RewriteRule ^view-certificate\.php$ certificate/view [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?certificate-pdf\.php(?:[?\s]) [NC]
+RewriteRule ^certificate-pdf\.php$ certificate/pdf [R=301,L,NE]
+RewriteCond %{REQUEST_METHOD} =GET
+RewriteCond %{THE_REQUEST} \s/+(.*/)?diagnostic\.php(?:[?\s]) [NC]
+RewriteRule ^diagnostic\.php$ diagnostic [R=301,L,NE]
+
+# URL publiques anglaises ; les fichiers PHP restent les points d'entrée internes.
+RewriteRule ^login/?$ login.php [L,QSA]
+RewriteRule ^logout/?$ logout.php [L,QSA]
+RewriteRule ^dashboard/?$ dashboard.php [L,QSA]
+RewriteRule ^certificate/?$ certificat.php [L,QSA]
+RewriteRule ^certificate/confirmation/?$ confirmation.php [L,QSA]
+RewriteRule ^certificate/generate/?$ generate-pdf.php [L,QSA]
+RewriteRule ^certificate/view/?$ view-certificate.php [L,QSA]
+RewriteRule ^certificate/pdf/?$ certificate-pdf.php [L,QSA]
+RewriteRule ^api/certificate/?$ certificate-data.php [L,QSA]
+RewriteRule ^api/otp/request/?$ request-otp.php [L,QSA]
+RewriteRule ^api/otp/verify/?$ verify-otp.php [L,QSA]
+RewriteRule ^api/certificate/save-pdf/?$ save-generated-pdf.php [L,QSA]
+RewriteRule ^api/certificate/print/?$ print-certificate-once.php [L,QSA]
+RewriteRule ^api/certificate/mark-printed/?$ mark-printed.php [L,QSA]
+RewriteRule ^diagnostic/?$ diagnostic.php [L,QSA]
+
 <FilesMatch "^(?:\.user\.ini|README\.md)$">
     Require all denied
 </FilesMatch>

@@ -100,6 +100,24 @@ function app_base_path(): string
         return $cached;
     }
 
+    // Déduire d'abord le sous-dossier depuis le système de fichiers. Cette
+    // méthode reste correcte même avec une URL réécrite comme /certificate/view.
+    $documentRoot = realpath((string) ($_SERVER['DOCUMENT_ROOT'] ?? ''));
+    $applicationRoot = realpath(dirname(__DIR__));
+    if (is_string($documentRoot) && $documentRoot !== '' && is_string($applicationRoot)) {
+        $documentRoot = rtrim(str_replace('\\', '/', $documentRoot), '/');
+        $applicationRoot = rtrim(str_replace('\\', '/', $applicationRoot), '/');
+        if ($applicationRoot === $documentRoot) {
+            $cached = '';
+            return $cached;
+        }
+        if (str_starts_with($applicationRoot . '/', $documentRoot . '/')) {
+            $relativeRoot = trim(substr($applicationRoot, strlen($documentRoot)), '/');
+            $cached = $relativeRoot === '' ? '' : '/' . $relativeRoot;
+            return $cached;
+        }
+    }
+
     $script = str_replace('\\', '/', (string) ($_SERVER['SCRIPT_NAME'] ?? ''));
     $dir = str_replace('\\', '/', dirname($script));
     if ($dir === '/' || $dir === '.' || $dir === '\\' || $dir === '') {
@@ -108,6 +126,41 @@ function app_base_path(): string
         $cached = '/' . trim($dir, '/');
     }
     return $cached;
+}
+
+/**
+ * Associe les fichiers PHP internes à des URL publiques courtes et stables.
+ * Les fichiers restent accessibles directement pour préserver la compatibilité.
+ */
+function app_public_path(string $path): string
+{
+    $query = '';
+    $queryPosition = strpos($path, '?');
+    if ($queryPosition !== false) {
+        $query = substr($path, $queryPosition);
+        $path = substr($path, 0, $queryPosition);
+    }
+
+    $routes = [
+        'index.php' => '',
+        'login.php' => 'login',
+        'logout.php' => 'logout',
+        'dashboard.php' => 'dashboard',
+        'certificat.php' => 'certificate',
+        'confirmation.php' => 'certificate/confirmation',
+        'generate-pdf.php' => 'certificate/generate',
+        'view-certificate.php' => 'certificate/view',
+        'certificate-pdf.php' => 'certificate/pdf',
+        'certificate-data.php' => 'api/certificate',
+        'request-otp.php' => 'api/otp/request',
+        'verify-otp.php' => 'api/otp/verify',
+        'save-generated-pdf.php' => 'api/certificate/save-pdf',
+        'print-certificate-once.php' => 'api/certificate/print',
+        'mark-printed.php' => 'api/certificate/mark-printed',
+        'diagnostic.php' => 'diagnostic',
+    ];
+
+    return ($routes[ltrim($path, '/')] ?? ltrim($path, '/')) . $query;
 }
 
 /** Construit un chemin interne fiable, à la racine ou dans un sous-dossier. */
@@ -120,7 +173,10 @@ function app_route(string $path = ''): string
         return $path;
     }
 
-    return app_base_path() . '/' . ltrim($path, '/');
+    $publicPath = app_public_path($path);
+    if ($publicPath === '') return app_base_path() === '' ? '/' : app_base_path() . '/';
+
+    return app_base_path() . '/' . $publicPath;
 }
 
 function redirect(string $path): void

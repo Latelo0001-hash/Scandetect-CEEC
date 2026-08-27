@@ -32,9 +32,9 @@ page_start('Voir le certificat', true, ['css/certificate.css?v=20260825e']);
 <div class="certificate-number-copy certificate-number-left" style="font-size:<?= number_format($leftNumberFontMm,2,'.','') ?>mm"><?= e($number) ?></div>
 <div class="certificate-number-copy certificate-number-stub" style="font-size:<?= number_format($rightNumberFontMm,2,'.','') ?>mm"><?= e($number) ?></div>
 <div class="certificate-number-copy certificate-number-right" style="font-size:<?= number_format($rightNumberFontMm,2,'.','') ?>mm"><?= e($number) ?></div>
-<div class="qr-slot qr-stub" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="transparent" aria-label="QR code blanc du volet gauche"></div>
+<div class="qr-slot qr-stub" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc du volet gauche sur fond bleu"></div>
 <div class="qr-slot qr-left" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#2F3776" data-qr-background="#FFFFFF" aria-label="QR code bleu du corps du certificat"></div>
-<div class="qr-slot qr-right" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="transparent" aria-label="QR code blanc de la vignette droite"></div>
+<div class="qr-slot qr-right" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc de la vignette droite sur fond bleu"></div>
 </div></article></div>
 <div class="result-actions"><div><h2>Consultation uniquement</h2><p class="muted">Cet aperçu permet de vérifier le certificat sans autoriser une nouvelle impression.</p></div><div class="result-buttons"><a class="btn-secondary-app" href="<?= e(app_route('dashboard.php')) ?>">← Tableau de bord</a></div></div>
 </section>

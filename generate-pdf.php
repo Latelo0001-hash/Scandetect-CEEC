@@ -99,7 +99,6 @@ page_start('Certificat généré', true, ['css/certificate.css?v=20260825e']);
 <section class="container certificate-result-section">
     <div class="certificate-result-copy">
         <p>Vérifiez que le papier contenant le certificat correspondant, avec le numéro de certificat approprié, est correctement inséré dans l'imprimante avant de lancer l'impression.</p>
-        <div class="certificate-tech-note"><strong>Principe d’impression :</strong> l’aperçu utilise le PDF 2 comme repère. Le fichier envoyé à l’imprimante correspond au PDF 4 et contient uniquement les 30 réponses et les trois QR, à superposer au papier officiel préimprimé.</div>
     </div>
 
     <div class="certificate-scroll">
@@ -127,9 +126,9 @@ page_start('Certificat généré', true, ['css/certificate.css?v=20260825e']);
                 <div class="certificate-number-copy certificate-number-right" style="font-size:<?= number_format($rightNumberFontMm, 2, '.', '') ?>mm"><?= e($number) ?></div>
 
                 <!-- Les QR suivent le modèle officiel : blancs sur les étiquettes bleues, bleu sur le fond blanc. -->
-                <div class="qr-slot qr-stub" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="transparent" aria-label="QR code blanc du volet gauche"></div>
+                <div class="qr-slot qr-stub" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc du volet gauche sur fond bleu"></div>
                 <div class="qr-slot qr-left" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#2F3776" data-qr-background="#FFFFFF" aria-label="QR code bleu du corps du certificat"></div>
-                <div class="qr-slot qr-right" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="transparent" aria-label="QR code blanc de la vignette droite"></div>
+                <div class="qr-slot qr-right" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc de la vignette droite sur fond bleu"></div>
             </div>
         </article>
     </div>
@@ -140,9 +139,9 @@ page_start('Certificat généré', true, ['css/certificate.css?v=20260825e']);
             <p id="pdf-status" class="muted">Le certificat est prêt à être préparé pour l’impression.</p>
         </div>
         <div class="result-buttons">
-            <span id="download-pdf" hidden data-certificate-number="<?= e($number) ?>" data-record-id="<?= e($id) ?>" data-csrf="<?= e(csrf_token()) ?>" data-auto-download="0" data-save-url="<?= e(app_route('save-generated-pdf.php')) ?>" data-print-once-url="<?= e(app_route('print-certificate-once.php')) ?>" data-dashboard-url="<?= e(app_route('dashboard.php')) ?>"></span>
+            <span id="download-pdf" hidden data-certificate-number="<?= e($number) ?>" data-record-id="<?= e($id) ?>" data-csrf="<?= e(csrf_token()) ?>" data-auto-download="0" data-save-url="<?= e(app_route('save-generated-pdf.php')) ?>" data-mark-printed-url="<?= e(app_route('mark-printed.php')) ?>" data-dashboard-url="<?= e(app_route('dashboard.php')) ?>"></span>
             <a class="btn-secondary-app" href="<?= e(app_route('dashboard.php')) ?>">← Retour au tableau de bord</a>
-            <button class="btn-primary-app inline-btn" type="button" id="print-certificate">Imprimer le certificat →</button>
+            <button class="btn-primary-app inline-btn" type="button" id="print-certificate" disabled>Imprimer le certificat →</button>
         </div>
     </div>
 </section>
@@ -169,7 +168,7 @@ page_start('Certificat généré', true, ['css/certificate.css?v=20260825e']);
             </label>
             <div class="paper-verification-actions">
                 <button class="btn-secondary-app" type="button" data-paper-modal-close>Annuler</button>
-                <button class="btn-primary-app inline-btn" type="submit">Confirmer et ouvrir le PDF 4 →</button>
+                <button class="btn-primary-app inline-btn" type="submit">Confirmer et imprimer →</button>
             </div>
         </form>
     </div>
@@ -178,5 +177,5 @@ page_start('Certificat généré', true, ['css/certificate.css?v=20260825e']);
 <script src="<?= e(app_route('js/qrcode-browser.js')) ?>"></script>
 <script src="<?= e(app_route('js/qr-render.js')) ?>"></script>
 <script src="<?= e(app_route('js/html2pdf.bundle.min.js')) ?>"></script>
-<script src="<?= e(app_route('js/certificate-download.js?v=20260825k')) ?>"></script>
+<script src="<?= e(app_route('js/certificate-download.js?v=20260827g')) ?>"></script>
 <?php page_end(); ?>
