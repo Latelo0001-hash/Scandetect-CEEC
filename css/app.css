@@ -312,13 +312,17 @@ label{font-size:13px}
   position:absolute;
   inset:0;
   background:url('../images/hero-qr-pattern.svg?v=20260826d') 0 0/180px 180px repeat;
-  opacity:.075;
+  opacity:.085;
   pointer-events:none
 }
-@media(max-width:920px){.home-hero-overlay::before{opacity:.045;background-size:150px 150px}}
+@media(max-width:920px){.home-hero-overlay::before{opacity:.08;background-size:150px 150px}}
 
-/* Cadrage portrait 9:16 de la vidéo sur téléphone. */
-@media(max-width:760px){
-  .home-hero-media{inset:0 0 auto 0;width:100%;height:177.7778vw;max-height:100%;aspect-ratio:9/16}
-  .home-hero-video{width:100%;height:100%;object-fit:cover;object-position:68% center}
+/* Photo de fond du hero, avec un cadrage adapté à chaque écran. */
+.home-hero-media{
+  background:#17214f url('../images/home-hero-responsive-2026.png?v=20260826') center center/cover no-repeat
 }
+@media(max-width:920px){.home-hero-media{background-position:68% center}}
+@media(max-width:760px){.home-hero-media{inset:0;background-position:67% center}}
+
+/* Sur téléphone, la photo de fond suffit : masquer la seconde illustration. */
+@media(max-width:760px){.home-visual-card{display:none}}

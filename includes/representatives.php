@@ -8,18 +8,18 @@ declare(strict_types=1);
 function ceec_representatives(): array
 {
     return [
-        'Herve Kadiayi',
-        'Jose Kasongo Ilunga (Direction provinciale du Haut-Katanga)',
-        'Agent CEEC Démonstration',
+        'Représentant CEEC 1',
+        'Représentant CEEC 2',
+        'Représentant CEEC 3',
     ];
 }
 
 function mines_representatives(): array
 {
     return [
-        'Musoga Kethia' => 'webmaster@scandetect-ceec.cd',
-        'Honore Kabange Numbi (Inspecteur des mines préposé de mines-CEEC)' => 'webmaster@scandetect-ceec.cd',
-        'Inspecteur des Mines Démonstration' => 'webmaster@scandetect-ceec.cd',
+        'Représentant Ministère des Mines 1' => 'webmaster@scandetect-ceec.cd',
+        'Représentant Ministère des Mines 2' => 'webmaster@scandetect-ceec.cd',
+        'Représentant Ministère des Mines 3' => 'webmaster@scandetect-ceec.cd',
     ];
 }
 

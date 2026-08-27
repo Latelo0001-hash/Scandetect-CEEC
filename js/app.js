@@ -15,19 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  var heroVideo = document.querySelector('.home-hero-video');
-  if (heroVideo) {
-    var revealHeroVideo = function () {
-      heroVideo.classList.add('is-ready');
-    };
-    if (heroVideo.readyState >= 2) {
-      revealHeroVideo();
-    } else {
-      heroVideo.addEventListener('loadeddata', revealHeroVideo, { once: true });
-      heroVideo.addEventListener('canplay', revealHeroVideo, { once: true });
-    }
-  }
-
   var form = document.getElementById('certificate-form');
   if (!form) return;
 
