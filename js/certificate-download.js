@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function qrIsReady() {
     var slots = Array.prototype.slice.call(certificate.querySelectorAll('.qr-slot'));
-    return slots.length === 3 && slots.every(function (slot) {
+    return slots.length === 2 && slots.every(function (slot) {
       return slot.getAttribute('data-qr-ready') === '1';
     });
   }

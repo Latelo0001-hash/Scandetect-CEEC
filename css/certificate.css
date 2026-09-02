@@ -8,21 +8,15 @@
 /* Nouveau modèle officiel : 1037.48 x 595.276 pt = 366 x 210 mm. */
 .certificate-stage{position:relative;width:366mm;height:210mm;margin:0 auto;background:transparent;box-shadow:0 18px 45px rgba(20,31,69,.18);overflow:hidden}
 .certificate-template{position:absolute;inset:0;width:366mm;height:210mm;display:block;object-fit:fill;user-select:none;pointer-events:none}
-.certificate-template-pdf1{display:none}
 .certificate-overlay{position:absolute;inset:0;width:366mm;height:210mm}
 
-/* Écran : PDF 2 + données. Consultation QR : PDF 1 + données.
-   Impression : PDF 4, uniquement les données et QR sur page blanche. */
-.verification-exporting .certificate-template-pdf2{display:none}
-.verification-exporting .certificate-template-pdf1{display:block}
-.verification-exporting .certificate-number-mask,
-.verification-exporting .certificate-number-copy,
-.verification-exporting .qr-slot,
-.verification-exporting .certificate-label-correction{display:none}
+/* Écran et consultation : PDF 2 avec les données variables.
+   Impression : PDF 4, uniquement les 30 réponses et les trois QR temporaires. */
 .pdf4-exporting .certificate-template,
 .pdf4-exporting .certificate-number-mask,
 .pdf4-exporting .certificate-number-copy,
 .pdf4-exporting .certificate-label-correction{display:none}
+.pdf4-exporting .certificate-overlay>:not(.certificate-value):not(.qr-slot){display:none!important}
 .pdf4-exporting .certificate-stage{background:#fff;box-shadow:none}
 .certificate-stage-consultation .certificate-number-mask,
 .certificate-stage-consultation .certificate-number-copy,

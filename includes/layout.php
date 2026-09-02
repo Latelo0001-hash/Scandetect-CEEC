@@ -13,7 +13,7 @@ function page_start(string $title, bool $authenticated = true, array $extraStyle
     <link rel="icon" type="image/png" sizes="64x64" href="<?= e(app_route('images/favicon.png?v=20260825')) ?>">
     <link rel="apple-touch-icon" sizes="180x180" href="<?= e(app_route('images/apple-touch-icon.png?v=20260825')) ?>">
     <link rel="stylesheet" href="<?= e(app_route('css/bootstrap.min.css')) ?>">
-    <link rel="stylesheet" href="<?= e(app_route('css/app.css?v=20260826x')) ?>">
+    <link rel="stylesheet" href="<?= e(app_route('css/app.css?v=20260827c')) ?>">
     <link rel="stylesheet" href="<?= e(app_route('css/accessibility.css?v=20260820c')) ?>">
     <?php foreach ($extraStyles as $style): ?>
     <link rel="stylesheet" href="<?= e(app_route((string) $style)) ?>">
@@ -39,7 +39,7 @@ function page_end(): void
 {
     ?></main>
 <footer class="app-footer"><div class="container">© <?= date('Y') ?> ScanDetect par CEEC — Centre d’Expertise, d’Évaluation et de Certification</div></footer>
-<script src="<?= e(app_route('js/app.js?v=20260826h')) ?>"></script>
+<script src="<?= e(app_route('js/app.js?v=20260902a')) ?>"></script>
 </body>
 </html><?php
 }

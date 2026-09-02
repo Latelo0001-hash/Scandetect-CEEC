@@ -79,10 +79,13 @@ document.addEventListener('DOMContentLoaded', function () {
     setFieldLock(false);
   }
 
-  function fillDetails(data) {
+  function fillDetails(data, locked) {
     detailFields.forEach(function (field) {
       if (Object.prototype.hasOwnProperty.call(data, field.name)) {
         var value = data[field.name] == null ? '' : String(data[field.name]);
+        if (!locked && (field.name === 'ceec_representative' || field.name === 'mines_representative')) {
+          value = '';
+        }
         if (field.classList.contains('money-input')) {
           value = value.replace(/\s*\$\s*/g, '').trim();
         }
@@ -126,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .then(function (payload) {
         if (!payload || !payload.ok) throw new Error((payload && payload.message) || 'Réponse invalide.');
-        fillDetails(payload.data || {});
+        fillDetails(payload.data || {}, !!payload.locked);
         if (recordToken) recordToken.value = payload.token || '';
         setStatus(payload.status || 'red', payload.status_label || 'Non imprimé');
         setFieldLock(!!payload.locked);

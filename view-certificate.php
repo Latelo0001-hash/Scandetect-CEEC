@@ -14,7 +14,7 @@ $publicPdfUrl = app_url('certificate-pdf.php?id=' . rawurlencode($id) . '&type=v
 $numberLength = max(1, strlen($number));
 $leftNumberFontMm = $numberLength <= 7 ? 15.8 : max(9.8, 15.8 * (7 / $numberLength));
 $rightNumberFontMm = $numberLength <= 7 ? 8.8 : max(5.8, 8.8 * (7 / $numberLength));
-page_start('Voir le certificat', true, ['css/certificate.css?v=20260825e']);
+page_start('Voir le certificat', true, ['css/certificate.css?v=20260831b']);
 ?>
 <section class="page-hero compact"><div class="container"><p class="eyebrow light">Consultation</p><h1>Certificat No. <?= e($number) ?></h1><p>Aperçu en lecture seule. Aucune impression n’est disponible depuis cette page.</p></div></section>
 <section class="container certificate-result-section readonly-certificate-view">
@@ -32,7 +32,7 @@ page_start('Voir le certificat', true, ['css/certificate.css?v=20260825e']);
 <div class="certificate-number-copy certificate-number-left" style="font-size:<?= number_format($leftNumberFontMm,2,'.','') ?>mm"><?= e($number) ?></div>
 <div class="certificate-number-copy certificate-number-stub" style="font-size:<?= number_format($rightNumberFontMm,2,'.','') ?>mm"><?= e($number) ?></div>
 <div class="certificate-number-copy certificate-number-right" style="font-size:<?= number_format($rightNumberFontMm,2,'.','') ?>mm"><?= e($number) ?></div>
-<div class="qr-slot qr-stub" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc du volet gauche sur fond bleu"></div>
+<div class="qr-slot qr-stub" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc de la vignette gauche sur fond bleu"></div>
 <div class="qr-slot qr-left" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#2F3776" data-qr-background="#FFFFFF" aria-label="QR code bleu du corps du certificat"></div>
 <div class="qr-slot qr-right" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc de la vignette droite sur fond bleu"></div>
 </div></article></div>

@@ -57,10 +57,11 @@ if (empty($_SESSION['draft'])) {
 }
 
 $draft = (array) $_SESSION['draft'];
+$ceecRepresentative = (string) ($draft['ceec_representative'] ?? '');
 $mineRepresentative = (string) ($draft['mines_representative'] ?? '');
 page_start('Vérifiez les informations');
 ?>
-<section class="page-hero compact"><div class="container"><a class="back-link" href="<?= e(app_route('certificat.php')) ?>">← Modifier le formulaire</a><p class="eyebrow light">Étape finale</p><h1>Vérifiez les informations</h1><p>Après validation par OTP, le certificat final sera généré sur le nouveau modèle officiel avec ses trois codes QR.</p></div></section>
+<section class="page-hero compact"><div class="container"><a class="back-link" href="<?= e(app_route('certificat.php')) ?>">← Modifier le formulaire</a><p class="eyebrow light">Étape finale</p><h1>Vérifiez les informations</h1><p>Après validation par OTP, le certificat final sera généré sur le nouveau modèle officiel avec ses deux codes QR.</p></div></section>
 <section class="container form-container">
 <div class="review-note"><strong>Vérifiez avant de valider</strong><span>Le responsable de mine devra confirmer cette opération avec un code reçu par e-mail.</span></div>
 <div class="review-card">
@@ -88,8 +89,8 @@ page_start('Vérifiez les informations');
         <div class="otp-icon">✉</div>
         <p class="eyebrow">Validation sécurisée</p>
         <h2 id="otp-modal-title">Code de confirmation</h2>
-        <p>Un même code OTP à 6 chiffres est envoyé aux adresses de test configurées pour le responsable de mine sélectionné :</p>
-        <strong class="otp-responsible-name"><?= e($mineRepresentative) ?></strong>
+        <p>Un même code OTP à 6 chiffres est envoyé aux responsables sélectionnés dont l’adresse est configurée :</p>
+        <strong class="otp-responsible-name"><?= e($ceecRepresentative) ?> / <?= e($mineRepresentative) ?></strong>
         <p id="otp-recipient" class="otp-recipient">Préparation de l’envoi…</p>
 
         <form id="otp-form" autocomplete="off">

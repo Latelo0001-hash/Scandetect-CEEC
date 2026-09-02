@@ -156,7 +156,8 @@ foreach ($groups as $section => $group): ?>
 <textarea class="form-control certificate-detail-field<?= $selectedLocked ? ' field-readonly' : '' ?>" id="<?= e($name) ?>" name="<?= e($name) ?>" rows="2" required<?= $selectedLocked ? ' readonly' : '' ?>><?= e((string) ($values[$name] ?? '')) ?></textarea>
 <?php elseif ($type === 'select_ceec' || $type === 'select_mines'):
     $choices = $type === 'select_ceec' ? ceec_representatives() : array_keys(mines_representatives());
-    $current = (string) ($values[$name] ?? ''); ?>
+    $draftMatchesCertificate = (string) ($sessionValues['certificate_number'] ?? '') === $selectedNumber;
+    $current = ($selectedLocked || $draftMatchesCertificate) ? (string) ($values[$name] ?? '') : ''; ?>
 <select class="form-control certificate-detail-field<?= $selectedLocked ? ' field-readonly' : '' ?>" id="<?= e($name) ?>" name="<?= e($name) ?>" required<?= $selectedLocked ? ' disabled' : '' ?>>
     <option value="">— Sélectionner —</option>
     <?php foreach ($choices as $choice): ?>

@@ -48,8 +48,8 @@ function scandetect_mock_records(): array
                 'exit_post' => 'Kasumbalesa',
                 'border_exit' => 'Kasumbalesa',
                 'by_transit' => 'Zambie',
-                'ceec_representative' => 'Jose Kasongo Ilunga (Direction provinciale du Haut-Katanga)',
-                'mines_representative' => 'Honore Kabange Numbi (Inspecteur des mines préposé de mines-CEEC)',
+                'ceec_representative' => 'Jose Kasongo Ilunga (Direction provincial du Haut-Katanga)',
+                'mines_representative' => 'Honore Kabange Numbi (Inspecteur des mines prépose de mines-CEEC)',
             ],
         ],
         [
@@ -87,8 +87,8 @@ function scandetect_mock_records(): array
                 'exit_post' => 'Kasumbalesa',
                 'border_exit' => 'Lukangaba, Sakania',
                 'by_transit' => 'Zambie',
-                'ceec_representative' => 'Jose Kasongo Ilunga (Direction provinciale du Haut-Katanga)',
-                'mines_representative' => 'Honore Kabange Numbi (Inspecteur des mines préposé de mines-CEEC)',
+                'ceec_representative' => 'Jean Baptiste OTSHUDI',
+                'mines_representative' => 'Honore Kabange Numbi (Inspecteur des mines prépose de mines-CEEC)',
             ],
         ],
         [
@@ -126,8 +126,8 @@ function scandetect_mock_records(): array
                 'exit_post' => 'Kasumbalesa',
                 'border_exit' => 'Kasumbalesa',
                 'by_transit' => 'Zambie',
-                'ceec_representative' => 'Agent CEEC Démonstration',
-                'mines_representative' => 'Inspecteur des Mines Démonstration',
+                'ceec_representative' => 'Jose Kasongo Ilunga (Direction provincial du Haut-Katanga)',
+                'mines_representative' => 'Honore Kabange Numbi (Inspecteur des mines prépose de mines-CEEC)',
             ],
         ],
         [
@@ -165,8 +165,8 @@ function scandetect_mock_records(): array
                 'exit_post' => 'Kasumbalesa',
                 'border_exit' => 'Kasumbalesa',
                 'by_transit' => 'Zambie',
-                'ceec_representative' => 'Agent CEEC Démonstration',
-                'mines_representative' => 'Inspecteur des Mines Démonstration',
+                'ceec_representative' => 'Jean Baptiste OTSHUDI',
+                'mines_representative' => 'Honore Kabange Numbi (Inspecteur des mines prépose de mines-CEEC)',
             ],
         ],
     ];

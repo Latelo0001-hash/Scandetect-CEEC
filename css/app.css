@@ -326,3 +326,19 @@ label{font-size:13px}
 
 /* Sur téléphone, la photo de fond suffit : masquer la seconde illustration. */
 @media(max-width:760px){.home-visual-card{display:none}}
+
+/* Filtres du tableau de bord. */
+.dashboard-filters{display:grid;grid-template-columns:minmax(280px,1fr) minmax(210px,260px) auto auto;align-items:end;gap:16px;margin-bottom:22px;padding:20px 22px;border:1px solid #dce4f2;border-radius:14px;background:linear-gradient(135deg,#fff 0%,#f8faff 100%);box-shadow:0 10px 30px rgba(31,45,118,.08)}
+.dashboard-filters label{display:block;margin-bottom:8px;color:#273354;font-size:13px;font-weight:800;letter-spacing:.01em}
+.dashboard-filters .form-control{box-sizing:border-box;height:52px!important;min-height:52px;margin:0;padding-top:0!important;padding-bottom:0!important;border:1.5px solid #cbd6e8;border-radius:9px;background-color:#fff;color:#17213f;font-size:15px;line-height:52px;box-shadow:0 2px 6px rgba(31,45,118,.04);transition:border-color .18s ease,box-shadow .18s ease}
+.dashboard-filters .form-control:hover{border-color:#97acd1}
+.dashboard-filters .form-control:focus{border-color:var(--sd-blue);box-shadow:0 0 0 4px rgba(47,55,118,.12);outline:0}
+.dashboard-search-control{position:relative}.dashboard-search-control>span{position:absolute;z-index:1;left:15px;top:50%;transform:translateY(-50%);color:#65728d;font-family:Arial,sans-serif;font-size:24px;line-height:1;pointer-events:none}.dashboard-search-control input{padding-left:46px!important;padding-right:38px!important}
+.dashboard-filter-status select{padding:0 42px 0 14px!important;cursor:pointer}
+.dashboard-filter-reset{box-sizing:border-box;height:52px;min-height:52px;margin:0;padding:0 20px;border:1.5px solid var(--sd-blue);border-radius:9px;background:#fff;color:var(--sd-blue);font-size:13px;font-weight:800;line-height:49px;white-space:nowrap;transition:background .18s ease,color .18s ease,transform .18s ease}
+.dashboard-filter-reset:hover{background:var(--sd-blue);color:#fff;transform:translateY(-1px)}
+.dashboard-filter-reset:focus-visible{outline:3px solid rgba(81,169,221,.35);outline-offset:2px}
+.dashboard-filter-count{align-self:center;margin:22px 0 0;color:var(--muted);font-size:14px;font-weight:700;white-space:nowrap}
+.dashboard-filter-empty td{padding:48px 20px!important;text-align:center!important;color:var(--muted);font-size:16px!important}
+@media(max-width:900px){.dashboard-filters{grid-template-columns:1fr 1fr}.dashboard-filter-count{margin:0;justify-self:end}}
+@media(max-width:600px){.dashboard-filters{grid-template-columns:1fr;padding:16px}.dashboard-filter-reset{width:100%}.dashboard-filter-count{justify-self:start;margin:0}}

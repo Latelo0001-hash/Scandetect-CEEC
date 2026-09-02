@@ -76,7 +76,7 @@ $numberLength = max(1, strlen($number));
 $leftNumberFontMm = $numberLength <= 7 ? 15.8 : max(9.8, 15.8 * (7 / $numberLength));
 $rightNumberFontMm = $numberLength <= 7 ? 8.8 : max(5.8, 8.8 * (7 / $numberLength));
 
-page_start('Certificat généré', true, ['css/certificate.css?v=20260825e']);
+page_start('Certificat généré', true, ['css/certificate.css?v=20260831b']);
 ?>
 <section class="page-hero compact"><div class="container"><p class="eyebrow light"><?= $isPrinted ? 'Certificat imprimé' : 'Certificat généré' ?></p><h1>Certificat No. <?= e($number) ?></h1><p><?= $isPrinted ? 'Ce certificat est verrouillé et disponible uniquement en consultation.' : 'Félicitations, vous avez généré le certificat avec succès.' ?></p></div></section>
 
@@ -104,7 +104,6 @@ page_start('Certificat généré', true, ['css/certificate.css?v=20260825e']);
     <div class="certificate-scroll">
         <article class="certificate-stage" id="certificate-to-download" aria-label="Aperçu du certificat sur le nouveau modèle officiel">
             <img class="certificate-template certificate-template-pdf2" src="<?= e(app_route('images/certificate-template-pdf2-clean.png?v=20260825b')) ?>" alt="PDF 2 — aperçu du papier officiel avec étiquettes bleues">
-            <img class="certificate-template certificate-template-pdf1" src="<?= e(app_route('images/certificate-template-pdf1.png?v=20260825a')) ?>" alt="PDF 1 — page 1 exacte du modèle à quatre pages">
             <div class="certificate-overlay">
                 <div class="certificate-label-correction" aria-label="Correction de l’intitulé anglais de la question 29">CEEC Representative:</div>
                 <?php foreach ($fields as $index => [$name]):
@@ -125,8 +124,8 @@ page_start('Certificat généré', true, ['css/certificate.css?v=20260825e']);
                 <div class="certificate-number-copy certificate-number-stub" style="font-size:<?= number_format($rightNumberFontMm, 2, '.', '') ?>mm"><?= e($number) ?></div>
                 <div class="certificate-number-copy certificate-number-right" style="font-size:<?= number_format($rightNumberFontMm, 2, '.', '') ?>mm"><?= e($number) ?></div>
 
-                <!-- Les QR suivent le modèle officiel : blancs sur les étiquettes bleues, bleu sur le fond blanc. -->
-                <div class="qr-slot qr-stub" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc du volet gauche sur fond bleu"></div>
+                <!-- QR temporaires : deux blancs sur les étiquettes bleues et un bleu sur le fond blanc. -->
+                <div class="qr-slot qr-stub" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc de la vignette gauche sur fond bleu"></div>
                 <div class="qr-slot qr-left" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#2F3776" data-qr-background="#FFFFFF" aria-label="QR code bleu du corps du certificat"></div>
                 <div class="qr-slot qr-right" data-qr-value="<?= e($publicPdfUrl) ?>" data-qr-color="#FFFFFF" data-qr-background="#2F3776" aria-label="QR code blanc de la vignette droite sur fond bleu"></div>
             </div>
@@ -177,5 +176,5 @@ page_start('Certificat généré', true, ['css/certificate.css?v=20260825e']);
 <script src="<?= e(app_route('js/qrcode-browser.js')) ?>"></script>
 <script src="<?= e(app_route('js/qr-render.js')) ?>"></script>
 <script src="<?= e(app_route('js/html2pdf.bundle.min.js')) ?>"></script>
-<script src="<?= e(app_route('js/certificate-download.js?v=20260827g')) ?>"></script>
+<script src="<?= e(app_route('js/certificate-download.js?v=20260831a')) ?>"></script>
 <?php page_end(); ?>

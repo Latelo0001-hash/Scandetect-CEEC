@@ -24,7 +24,7 @@ function otp_mask_email(string $email): string
 }
 
 
-function otp_delivery_recipients(string $fallbackEmail): array
+function otp_delivery_recipients($representativeEmails): array
 {
     $cfg = scandetect_mail_config();
     $configured = $cfg['test_recipients'] ?? [];
@@ -35,7 +35,11 @@ function otp_delivery_recipients(string $fallbackEmail): array
         $legacy = trim((string) ($cfg['test_recipient'] ?? ''));
         if ($legacy !== '') $configured[] = $legacy;
     }
-    if (!$configured && $fallbackEmail !== '') $configured[] = $fallbackEmail;
+    $representativeEmails = is_array($representativeEmails) ? $representativeEmails : [$representativeEmails];
+    foreach ($representativeEmails as $representativeEmail) {
+        $representativeEmail = trim((string) $representativeEmail);
+        if ($representativeEmail !== '') $configured[] = $representativeEmail;
+    }
 
     $valid = [];
     foreach ($configured as $email) {
@@ -50,9 +54,9 @@ function otp_mask_recipients(array $recipients): string
     return implode(' et ', array_map('otp_mask_email', $recipients));
 }
 
-function otp_send_mail(string $email, string $representative, string $certificateNumber, string $otp): bool
+function otp_send_mail($emails, string $representative, string $certificateNumber, string $otp): bool
 {
-    $recipients = otp_delivery_recipients($email);
+    $recipients = otp_delivery_recipients($emails);
     if (!$recipients) {
         throw new RuntimeException('Aucune adresse de réception OTP n’est configurée.');
     }
@@ -72,11 +76,15 @@ function otp_send_mail(string $email, string $representative, string $certificat
 function otp_create_for_draft(array $draft): array
 {
     $number = trim((string) ($draft['certificate_number'] ?? ''));
-    $representative = trim((string) ($draft['mines_representative'] ?? ''));
-    $email = mine_responsible_email($representative);
-    $deliveryRecipients = otp_delivery_recipients($email);
+    $ceecRepresentative = trim((string) ($draft['ceec_representative'] ?? ''));
+    $mineRepresentative = trim((string) ($draft['mines_representative'] ?? ''));
+    $representative = $ceecRepresentative . ' / ' . $mineRepresentative;
+    $mineEmail = mine_responsible_email($mineRepresentative);
+    $ceecEmail = ceec_responsible_email($ceecRepresentative);
+    $representativeEmails = array_filter([$mineEmail, $ceecEmail]);
+    $deliveryRecipients = otp_delivery_recipients($representativeEmails);
 
-    if ($number === '' || $email === '' || !$deliveryRecipients) {
+    if ($number === '' || $mineEmail === '' || !$deliveryRecipients) {
         throw new RuntimeException('Le responsable de mine ou son adresse e-mail n’est pas configuré.');
     }
 
@@ -107,7 +115,7 @@ function otp_create_for_draft(array $draft): array
         'debug_otp' => otp_is_local_debug() ? $otp : '',
     ];
 
-    if (!otp_send_mail($email, $representative, $number, $otp)) {
+    if (!otp_send_mail($representativeEmails, $representative, $number, $otp)) {
         throw new RuntimeException('Le serveur n’a pas pu envoyer l’e-mail OTP. Vérifiez la configuration e-mail de l’hébergement.');
     }
 

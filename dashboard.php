@@ -21,6 +21,24 @@ page_start('Tableau de bord');
         <div><h2>Certificat généré</h2><p class="muted"><?= count($records) ?> certificat(s) enregistré(s)</p></div>
         <a class="btn-primary-app inline-btn" href="<?= e(app_route('certificat.php')) ?>">Générer un certificat <span>→</span></a>
     </div>
+    <?php if ($records): ?>
+    <div class="dashboard-filters" role="search" aria-label="Filtrer les certificats">
+        <div class="dashboard-filter-search">
+            <label for="dashboard-search">Rechercher</label>
+            <div class="dashboard-search-control"><span aria-hidden="true">⌕</span><input class="form-control" id="dashboard-search" type="search" placeholder="N° certificat, exportateur, produit ou localisation" autocomplete="off"></div>
+        </div>
+        <div class="dashboard-filter-status">
+            <label for="dashboard-status-filter">Statut</label>
+            <select class="form-control" id="dashboard-status-filter">
+                <option value="all">Tous les statuts</option>
+                <option value="unprinted">Non imprimé</option>
+                <option value="printed">Imprimé</option>
+                <option value="latest_printed">Derniers imprimés</option>
+            </select>
+        </div>
+        <button class="btn-secondary-app dashboard-filter-reset" id="dashboard-filter-reset" type="button">Réinitialiser</button>
+    </div>
+    <?php endif; ?>
     <div class="card-panel">
     <?php if (!$records): ?>
         <div class="empty-state"><div class="empty-icon">◇</div><h3>Aucun certificat</h3><p>Commencez par générer un certificat d’origine.</p><a href="<?= e(app_route('certificat.php')) ?>">Générer un certificat →</a></div>
@@ -32,15 +50,17 @@ page_start('Tableau de bord');
             $created = (string) ($record['created_at'] ?? '');
             $dt = $created !== '' ? date_create($created) : false;
             $number = trim((string) ($data['certificate_number'] ?? ''));
-            $printed = trim((string) ($record['printed_at'] ?? '')) !== '';
+            $printedAt = trim((string) ($record['printed_at'] ?? ''));
+            $printed = $printedAt !== '';
+            $printedTimestamp = $printed ? (strtotime($printedAt) ?: 0) : 0;
             $location = certificate_truck_location($record);
             $continueUrl = app_route('certificat.php?number=' . rawurlencode($number));
             // Toujours passer par view-certificate.php : si le PDF existe il est ouvert,
             // sinon un aperçu en lecture seule est rendu à partir des données sauvegardées.
             $viewUrl = app_route('view-certificate.php?id=' . rawurlencode($token));
         ?>
-            <tr class="dashboard-certificate-row <?= $printed ? 'dashboard-row-printed' : 'dashboard-row-active' ?>" <?= !$printed ? 'data-href="' . e($continueUrl) . '" tabindex="0" role="link"' : '' ?>>
-                <td><strong><?= e($number) ?></strong><?php if (!empty($record['mock'])): ?> <span class="mock-badge">MOCK</span><?php endif; ?></td>
+            <tr class="dashboard-certificate-row <?= $printed ? 'dashboard-row-printed' : 'dashboard-row-active' ?>" data-filter-status="<?= $printed ? 'printed' : 'unprinted' ?>" data-printed-at="<?= $printedTimestamp ?>" <?= !$printed ? 'data-href="' . e($continueUrl) . '" tabindex="0" role="link"' : '' ?>>
+                <td><strong><?= e($number) ?></strong></td>
                 <td><?= e((string) ($data['exporter'] ?? '')) ?></td>
                 <td><?= e((string) ($data['product'] ?? '')) ?></td>
                 <td><?= $dt ? e($dt->format('d/m/Y')) : '' ?></td>
@@ -55,6 +75,7 @@ page_start('Tableau de bord');
                 </td>
             </tr>
         <?php endforeach; ?>
+        <tr class="dashboard-filter-empty" id="dashboard-filter-empty" hidden><td colspan="7">Aucun certificat ne correspond à ces critères.</td></tr>
         </tbody></table></div>
     <?php endif; ?>
     </div>
@@ -82,6 +103,64 @@ page_start('Tableau de bord');
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    var searchInput = document.getElementById('dashboard-search');
+    var statusFilter = document.getElementById('dashboard-status-filter');
+    var resetFilter = document.getElementById('dashboard-filter-reset');
+    var filterCount = document.getElementById('dashboard-filter-count');
+    var filterEmpty = document.getElementById('dashboard-filter-empty');
+    var certificateRows = Array.prototype.slice.call(document.querySelectorAll('.dashboard-certificate-row'));
+    var certificateBody = certificateRows.length ? certificateRows[0].parentNode : null;
+    certificateRows.forEach(function (row, index) { row.dataset.originalOrder = String(index); });
+
+    function normalizeFilterText(value) {
+        var text = String(value || '').toLocaleLowerCase('fr');
+        return typeof text.normalize === 'function' ? text.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : text;
+    }
+
+    function applyDashboardFilters() {
+        var query = normalizeFilterText(searchInput ? searchInput.value.trim() : '');
+        var selectedStatus = statusFilter ? statusFilter.value : 'all';
+        var visibleCount = 0;
+
+        var orderedRows = certificateRows.slice();
+        if (selectedStatus === 'latest_printed') {
+            orderedRows.sort(function (left, right) {
+                return Number(right.dataset.printedAt || 0) - Number(left.dataset.printedAt || 0);
+            });
+        } else {
+            orderedRows.sort(function (left, right) {
+                return Number(left.dataset.originalOrder || 0) - Number(right.dataset.originalOrder || 0);
+            });
+        }
+        if (certificateBody) orderedRows.forEach(function (row) { certificateBody.appendChild(row); });
+
+        orderedRows.forEach(function (row) {
+            var matchesText = query === '' || normalizeFilterText(row.textContent).indexOf(query) !== -1;
+            var rowStatus = row.getAttribute('data-filter-status') || '';
+            var matchesStatus = selectedStatus === 'all' || selectedStatus === rowStatus || (selectedStatus === 'latest_printed' && rowStatus === 'printed');
+            var visible = matchesText && matchesStatus;
+            row.hidden = !visible;
+            if (visible) visibleCount += 1;
+        });
+
+        if (filterCount) filterCount.textContent = visibleCount + ' résultat(s)';
+        if (filterEmpty) {
+            filterEmpty.hidden = visibleCount !== 0;
+            if (certificateBody) certificateBody.appendChild(filterEmpty);
+        }
+    }
+
+    if (searchInput) searchInput.addEventListener('input', applyDashboardFilters);
+    if (statusFilter) statusFilter.addEventListener('change', applyDashboardFilters);
+    if (resetFilter) {
+        resetFilter.addEventListener('click', function () {
+            if (searchInput) searchInput.value = '';
+            if (statusFilter) statusFilter.value = 'all';
+            applyDashboardFilters();
+            if (searchInput) searchInput.focus();
+        });
+    }
+
     document.querySelectorAll('.dashboard-row-active[data-href]').forEach(function (row) {
         function openRow(event) {
             if (event.target.closest('a,button,input,select,textarea')) return;
